@@ -975,11 +975,15 @@
 - (void)updateNavigation {
     
 	// Title
-	if ([self numberOfPhotos] > 1) {
-		self.title = [NSString stringWithFormat:@"%i %@ %i", _currentPageIndex+1, NSLocalizedString(@"of", @"Used in the context: 'Showing 1 of 3 items'"), [self numberOfPhotos]];		
-	} else {
-		self.title = nil;
-	}
+    if ([_delegate respondsToSelector:@selector(photoBrowser:titleForPhotoAtIndex:)]) {
+        self.title = [_delegate photoBrowser:self titleForPhotoAtIndex:index];
+    } else {
+        if ([self numberOfPhotos] > 1) {
+            self.title = [NSString stringWithFormat:@"%i %@ %i", _currentPageIndex+1, NSLocalizedString(@"of", @"Used in the context: 'Showing 1 of 3 items'"), [self numberOfPhotos]];		
+        } else {
+            self.title = nil;
+        }
+    }
 	
 	// Buttons
 	_previousButton.enabled = (_currentPageIndex > 0);
