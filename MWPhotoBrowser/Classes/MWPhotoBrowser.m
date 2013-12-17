@@ -1027,6 +1027,8 @@
 // If permanent then we don't set timers to hide again
 // Fades all controls on iOS 5 & 6, and iOS 7 controls slide and fade
 - (void)setControlsHidden:(BOOL)hidden animated:(BOOL)animated permanent:(BOOL)permanent {
+    // FIXME: TODO: JMS: never hide, shit is broken.
+    hidden = NO;
     
     // Force visible if no photos
     if (![self numberOfPhotos]) hidden = NO;
