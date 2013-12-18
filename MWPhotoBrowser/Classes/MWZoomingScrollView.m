@@ -110,7 +110,7 @@
 
 // Get and display image
 - (void)displayImage {
-	if (_photo && _photoImageView.image == nil) {
+	if (_photo) {
 		
 		// Reset
 		self.maximumZoomScale = 1;
@@ -120,19 +120,23 @@
 		
 		// Get image from browser as it handles ordering of fetching
 		UIImage *img = [self.photoBrowser imageForPhoto:_photo];
-		if (img) {
+		if (img || [_photo placeholderImage]) {
 			
 			// Hide indicator
 			[self hideLoadingIndicator];
 			
 			// Set image
-			_photoImageView.image = img;
+			_photoImageView.image = img ? img : [_photo placeholderImage];
 			_photoImageView.hidden = NO;
+            
+            if (!img) {
+                [self showLoadingIndicator];
+            }
 			
 			// Setup photo frame
 			CGRect photoImageViewFrame;
 			photoImageViewFrame.origin = CGPointZero;
-			photoImageViewFrame.size = img.size;
+			photoImageViewFrame.size = _photoImageView.image.size;
 			_photoImageView.frame = photoImageViewFrame;
 			self.contentSize = photoImageViewFrame.size;
 

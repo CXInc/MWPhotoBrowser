@@ -32,6 +32,9 @@
 // methods returns nil.
 - (UIImage *)underlyingImage;
 
+// This is used when underlyingImage has not let loaded
+- (UIImage *)placeholderImage;
+
 // Called when the browser has determined the underlying images is not
 // already loaded into memory but needs it.
 // You must load the image asyncronously (and decompress it for better performance).
